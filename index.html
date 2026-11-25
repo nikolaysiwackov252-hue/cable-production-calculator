@@ -1,0 +1,346 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101b2b">
+<title>Расчёты и технологии кабельного производства</title>
+<style>
+:root {
+  --bg:#0b1422;
+  --panel:#14243a;
+  --panel2:#1a3049;
+  --accent:#20c5bd;
+  --text:#edf5fb;
+  --muted:#9aafc2;
+  --line:#29435b;
+  --copper:#d78a55;
+  --aluminum:#b9c7d4;
+}
+* {box-sizing:border-box}
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+}
+header {
+  padding:25px 18px 20px;
+  background:linear-gradient(145deg,#142c46,#0b1422);
+  border-bottom:1px solid var(--line);
+}
+header small {
+  color:var(--accent);
+  letter-spacing:1px;
+  font-size:11px;
+  text-transform:uppercase;
+}
+h1 {
+  font-size:23px;
+  line-height:1.3;
+  margin:12px 0 5px;
+}
+header p {color:var(--muted);font-size:13px;margin:0}
+main {max-width:760px;margin:auto;padding:18px}
+.menu {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.menu button {
+  min-height:105px;
+  padding:16px 12px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:var(--panel);
+  color:var(--text);
+  text-align:left;
+  font-size:16px;
+  font-weight:bold;
+}
+.menu button span {
+  display:block;
+  font-size:27px;
+  margin-bottom:10px;
+}
+.menu button:active {background:var(--panel2)}
+.section {display:none;margin-top:20px}
+.section.active {display:block}
+h2 {font-size:21px;margin:8px 0 16px}
+h3 {font-size:16px;margin:18px 0 10px}
+.card {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:17px;
+  margin-bottom:14px;
+}
+label {
+  display:block;
+  color:var(--muted);
+  font-size:13px;
+  margin:13px 0 6px;
+}
+input,select,textarea {
+  width:100%;
+  padding:13px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:#091321;
+  color:var(--text);
+  font-size:16px;
+  outline:none;
+}
+input:focus,select:focus,textarea:focus {
+  border-color:var(--accent);
+}
+.action {
+  width:100%;
+  padding:14px;
+  margin-top:15px;
+  border:0;
+  border-radius:10px;
+  background:var(--accent);
+  color:#062326;
+  font-size:16px;
+  font-weight:bold;
+}
+.result {
+  margin-top:15px;
+  padding:15px;
+  background:#0b1c2b;
+  border:1px solid var(--line);
+  border-radius:10px;
+}
+.result strong {
+  display:block;
+  color:var(--accent);
+  font-size:23px;
+  margin-top:5px;
+  overflow-wrap:anywhere;
+}
+.back {
+  background:transparent;
+  border:1px solid var(--line);
+  color:var(--muted);
+  padding:10px 14px;
+  border-radius:8px;
+  margin-bottom:14px;
+}
+.item {
+  padding:14px;
+  margin:9px 0;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:10px;
+}
+.item b {color:var(--accent)}
+.muted {color:var(--muted);font-size:13px;line-height:1.5}
+footer {
+  text-align:center;
+  padding:25px 10px;
+  color:var(--muted);
+  font-size:12px;
+}
+@media(max-width:380px) {
+  h1 {font-size:20px}
+  .menu button {font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <small>Производственный справочник и расчёты</small>
+  <h1>Расчёты и технологии кабельного производства</h1>
+  <p>Инструменты для кабельного производства</p>
+</header>
+
+<main>
+  <div id="home">
+    <div class="menu">
+      <button onclick="show('copper')">
+        <span>🟠</span>Калькулятор меди
+      </button>
+      <button onclick="show('aluminum')">
+        <span>⚪</span>Калькулятор алюминия
+      </button>
+      <button onclick="show('cable')">
+        <span>🔧</span>Калькулятор кабеля
+      </button>
+      <button onclick="show('guide')">
+        <span>📘</span>Руководство
+      </button>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <b>Добро пожаловать!</b>
+      <p class="muted">
+        Выберите нужный калькулятор или откройте руководство
+        по технологиям кабельного производства.
+      </p>
+    </div>
+    <div class="item" onclick="show('feedback')">
+      <b>✉ Обратная связь</b>
+      <p class="muted">Предложения, замечания и сообщения об ошибках</p>
+    </div>
+  </div>
+
+  <section id="copper" class="section">
+    <button class="back" onclick="home()">← Главная</button>
+    <h2 style="color:var(--copper)">Калькулятор меди</h2>
+    <div class="card">
+      <label>Диаметр проволоки, мм</label>
+      <input id="cuD" type="number" min="0.001" step="0.001" placeholder="Например, 0.500">
+      <label>Количество ходов</label>
+      <input id="cuN" type="number" min="1" step="1" value="1">
+      <label>Длина, метров</label>
+      <input id="cuL" type="number" min="0" step="any" value="1000">
+      <button class="action" onclick="calculate('cu')">Рассчитать</button>
+      <div id="cuResult" class="result">Введите данные для расчёта</div>
+    </div>
+    <p class="muted">Плотность меди в расчёте: 8,89 г/см³ (эквивалентно 8,89 г/см³ в формуле массы 1 км проволоки).</p>
+  </section>
+
+  <section id="aluminum" class="section">
+    <button class="back" onclick="home()">← Главная</button>
+    <h2 style="color:var(--aluminum)">Калькулятор алюминия</h2>
+    <div class="card">
+      <label>Диаметр проволоки, мм</label>
+      <input id="alD" type="number" min="0.001" step="0.001" placeholder="Например, 1.500">
+      <label>Количество ходов</label>
+      <input id="alN" type="number" min="1" step="1" value="1">
+      <label>Длина, метров</label>
+      <input id="alL" type="number" min="0" step="any" value="1000">
+      <button class="action" onclick="calculate('al')">Рассчитать</button>
+      <div id="alResult" class="result">Введите данные для расчёта</div>
+    </div>
+    <p class="muted">Плотность алюминия в расчёте: 2,70 г/см³.</p>
+  </section>
+
+  <section id="cable" class="section">
+    <button class="back" onclick="home()">← Главная</button>
+    <h2>Калькулятор кабеля</h2>
+    <div class="item"><b>Волочение</b><p class="muted">Расчёты волочения проволоки — раздел будет расширен.</p></div>
+    <div class="item"><b>Скрутка</b><p class="muted">Расчёт параметров скрутки жил.</p></div>
+    <div class="item"><b>Опрессовка</b><p class="muted">Расчёты параметров опрессовки.</p></div>
+    <div class="item"><b>Бухтовка и намотка</b><p class="muted">Расчёт длины и параметров намотки.</p></div>
+  </section>
+
+  <section id="guide" class="section">
+    <button class="back" onclick="home()">← Главная</button>
+    <h2>Руководство</h2>
+    <div class="item">
+      <b>1. Материалы, классы и маркировка кабелей</b>
+      <p class="muted">Медь, алюминий, классы жил, расшифровка маркировки и области применения.</p>
+    </div>
+    <div class="item">
+      <b>2. Технология кабельного производства</b>
+      <p class="muted">Основные технологические процессы и оборудование.</p>
+    </div>
+    <div class="item">
+      <b>2.1. Волочение проволоки</b>
+      <p class="muted">Однократное и многократное волочение, волоки, деформация металла и отжиг.</p>
+    </div>
+    <div class="item">
+      <b>2.2. Эмульсия и СОЖ</b>
+      <p class="muted">Концентрация, плотность, приготовление и контроль рабочей эмульсии.</p>
+    </div>
+    <div class="item">
+      <b>2.3. Скрутка</b>
+      <p class="muted">Типы скрутки, шаг, направление и контроль качества.</p>
+    </div>
+    <div class="item">
+      <b>2.4. Броня и экранировка</b>
+      <p class="muted">Назначение, материалы и особенности наложения.</p>
+    </div>
+    <div class="item">
+      <b>2.5. Опрессовка, изоляция и оболочка</b>
+      <p class="muted">Основные этапы и контроль параметров.</p>
+    </div>
+    <div class="item">
+      <b>2.6. Бухтовка и намотка</b>
+      <p class="muted">Укладка готового кабеля и требования к намотке.</p>
+    </div>
+  </section>
+
+  <section id="feedback" class="section">
+    <button class="back" onclick="home()">← Главная</button>
+    <h2>Обратная связь</h2>
+    <div class="card">
+      <p class="muted">Напишите предложение, замечание или сообщение об ошибке. Текст можно скопировать и отправить автору проекта.</p>
+      <label>Ваше сообщение</label>
+      <textarea id="feedbackText" rows="6" placeholder="Опишите вопрос или предложение..."></textarea>
+      <button class="action" onclick="copyFeedback()">Скопировать сообщение</button>
+      <p id="feedbackStatus" class="muted"></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  Расчёты и технологии кабельного производства<br>
+  Версия 0.1.15
+</footer>
+
+<script>
+function show(id) {
+  document.getElementById('home').style.display='none';
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function home() {
+  document.getElementById('home').style.display='block';
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  window.scrollTo(0,0);
+}
+function formatNumber(n) {
+  return n.toLocaleString('ru-RU',{
+    minimumFractionDigits:4,
+    maximumFractionDigits:4
+  });
+}
+function calculate(type) {
+  const isCu=type==='cu';
+  const prefix=isCu?'cu':'al';
+  const density=isCu?8.89:2.7;
+  const d=Number(document.getElementById(prefix+'D').value);
+  const passes=Number(document.getElementById(prefix+'N').value);
+  const length=Number(document.getElementById(prefix+'L').value);
+  const output=document.getElementById(prefix+'Result');
+
+  if(!Number.isFinite(d)||d<=0||!Number.isInteger(passes)||passes<1||
+     !Number.isFinite(length)||length<0) {
+    output.textContent='Проверьте введённые значения.';
+    return;
+  }
+
+  const kgPerKm=(d*d*3.1416/4*density);
+  const totalKg=kgPerKm*passes*length/1000;
+  const onePass=kgPerKm*length/1000;
+  const mass=totalKg<1
+    ? formatNumber(totalKg*1000)+' г'
+    : formatNumber(totalKg)+' кг';
+
+  output.innerHTML=
+    'Масса одного хода на 1 км:<strong>'+formatNumber(kgPerKm)+' кг</strong>'+
+    'Масса всех ходов на 1 км:<strong>'+formatNumber(kgPerKm*passes)+' кг</strong>'+
+    'Масса на заданную длину:<strong>'+mass+'</strong>';
+}
+async function copyFeedback() {
+  const text=document.getElementById('feedbackText').value.trim();
+  const status=document.getElementById('feedbackStatus');
+  if(!text) {
+    status.textContent='Сначала напишите сообщение.';
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+    status.textContent='Сообщение скопировано.';
+  } catch(e) {
+    status.textContent='Не удалось скопировать автоматически. Выделите и скопируйте текст вручную.';
+  }
+}
+</script>
+</body>
+</html>
